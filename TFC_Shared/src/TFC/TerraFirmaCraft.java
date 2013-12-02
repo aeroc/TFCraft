@@ -5,6 +5,8 @@ package TFC;
 
 import java.io.File;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.DimensionManager;
@@ -40,6 +42,8 @@ import TFC.Handlers.PacketHandler;
 import TFC.Handlers.PlayerTossEventHandler;
 import TFC.Handlers.ServerTickHandler;
 import TFC.Handlers.Client.ClientTickHandler;
+import TFC.OreMod.TFCOreMod;
+import TFC.OreMod.BlockAnthracite;
 import TFC.WorldGen.TFCProvider;
 import TFC.WorldGen.TFCProviderHell;
 import TFC.WorldGen.TFCWorldType;
@@ -74,6 +78,8 @@ public class TerraFirmaCraft
 
 	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy;
+	
+	public static Block anthracite;
 
 	public TerraFirmaCraft()
 	{
@@ -108,15 +114,20 @@ public class TerraFirmaCraft
 
 		TFCBlocks.LoadBlocks();
 		TFCBlocks.RegisterBlocks();
-
+		anthracite = new BlockAnthracite( 980, Material.rock ).setHardness(10F).setResistance(10F).setUnlocalizedName("Ore");
+		GameRegistry.registerBlock( anthracite, "Anthracite" );
 		//Load Items
 		TFCItems.Setup();
+		
+		//Init Ore Mod
+		TFCOreMod.initOreMod();
 
 		//Register Generators
-		GameRegistry.registerWorldGenerator(new WorldGenOreSurface(100,150));
-		GameRegistry.registerWorldGenerator(new WorldGenOreSurface(130,200));
-		GameRegistry.registerWorldGenerator(new WorldGenOre(5,96));
-		GameRegistry.registerWorldGenerator(new WorldGenOre(60,130));
+		GameRegistry.registerWorldGenerator( TFCOreMod.oreGenerator );	//Ore Mod
+//						GameRegistry.registerWorldGenerator(new WorldGenOreSurface(100,150));
+//						GameRegistry.registerWorldGenerator(new WorldGenOreSurface(130,200));
+//						GameRegistry.registerWorldGenerator(new WorldGenOre(5,96));
+//						GameRegistry.registerWorldGenerator(new WorldGenOre(60,130));
 		GameRegistry.registerWorldGenerator(new WorldGenCaveDecor());
 		GameRegistry.registerWorldGenerator(new WorldGenForests());
 		GameRegistry.registerWorldGenerator(new WorldGenLooseRocks());

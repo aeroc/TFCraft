@@ -218,10 +218,11 @@ public class BlockGrass extends net.minecraft.block.BlockGrass
 					{
 						world.setBlock(i, j + 1, k, Block.tallGrass.blockID, 1, 0x2);
 					}
-					else if(rand.nextInt(15000) == 0 && temp > 20 && world.canBlockSeeTheSky(i, j, k))
-					{
-						new WorldGenGrowTrees().generate(world, rand, i, j, k);
-					}
+					//Aero: Sapling spam off
+//					else if(rand.nextInt(15000) == 0 && temp > 20 && world.canBlockSeeTheSky(i, j, k))
+//					{
+//						new WorldGenGrowTrees().generate(world, rand, i, j, k);
+//					}
 				}
 
 				boolean nearWater = false;

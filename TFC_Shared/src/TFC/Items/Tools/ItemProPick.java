@@ -70,7 +70,8 @@ public class ItemProPick extends ItemTerra
         // If an ore block is targeted directly, it'll tell you what it is.
         if (blockID == TFCBlocks.Ore.blockID ||
                 blockID == TFCBlocks.Ore2.blockID ||
-                blockID == TFCBlocks.Ore3.blockID) {
+                blockID == TFCBlocks.Ore3.blockID || 
+                blockID == 980 ) {
             
             TellResult(player, new ItemStack(blockID, 1, meta));
             return true;
@@ -97,7 +98,8 @@ public class ItemProPick extends ItemTerra
                     
                     if (blockID != TFCBlocks.Ore.blockID &&
                             blockID != TFCBlocks.Ore2.blockID &&
-                            blockID != TFCBlocks.Ore3.blockID)
+                            blockID != TFCBlocks.Ore3.blockID &&
+                            blockID != 980 )
                         continue;
                     
                     meta = world.getBlockMetadata(blockX, blockY, blockZ);
@@ -108,11 +110,12 @@ public class ItemProPick extends ItemTerra
                     ItemStack ore = new ItemStack(blockID, 1, meta);
                     String oreName = ore.getDisplayName();
                     
+                    
                     if (results.containsKey(oreName))
                         results.get(oreName).Count++;
                     else
                         results.put(oreName, new ProspectResult(ore, 1));
-                    
+
                     ore = null;
                     oreName = null;
                 }
@@ -132,9 +135,17 @@ public class ItemProPick extends ItemTerra
      * Tells the player what block of ore he found, when directly targeting an ore block.
      */
     private void TellResult(EntityPlayer player, ItemStack ore) {
+    	if( ore.itemID == 980 ){
+    		player.addChatMessage(String.format("%s %s", 
+                    StringUtil.localize("gui.ProPick.Found"), 
+                    "Anthracite" ) );
+    	}
+    	else{
+    	
         player.addChatMessage(String.format("%s %s", 
                 StringUtil.localize("gui.ProPick.Found"), 
                 ore.getItem().getItemDisplayName(ore)));
+    	}
     }
     
     /*
@@ -149,7 +160,10 @@ public class ItemProPick extends ItemTerra
         int index = random.nextInt(results.size());
         ProspectResult result = results.values().toArray(new ProspectResult[0])[index];
         String oreName = result.ItemStack.getItem().getItemDisplayName(result.ItemStack);
-        
+
+        if( oreName.equals( "tile.Ore.name" ) ){
+        	oreName = "Anthracite";
+        }
         if (result.Count < 10)
             player.addChatMessage(String.format("%s %s", StringUtil.localize("gui.ProPick.FoundTraces"), oreName));
         else if(result.Count < 20)

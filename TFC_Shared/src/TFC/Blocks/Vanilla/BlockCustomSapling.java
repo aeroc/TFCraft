@@ -110,11 +110,37 @@ public class BlockCustomSapling extends BlockTerraContainer
 		
 		TileEntitySapling te = (TileEntitySapling) world.getBlockTileEntity(i, j, k);
 		
-		if(te != null && te.growTime == 0)
-		{
-			te.growTime = (long) ((TFC_Time.getTotalTicks() + (TFC_Time.dayLength * 7) * growSpeed)+(world.rand.nextFloat()*TFC_Time.dayLength));
+		if(te != null && te.growTime == 0){
+			//Aero's code
+			int numberOfDaysToGrow = TFC_Time.daysInYear; //Original number is 7 (aero's variable)
+			
+			switch( meta ){
+				case 0: numberOfDaysToGrow *= 6; break;
+				case 1: numberOfDaysToGrow *= 3; break;
+				case 2: numberOfDaysToGrow *= 5; break;
+				case 3: numberOfDaysToGrow *= 6; break;
+				case 4: numberOfDaysToGrow *= 12; break;
+				case 5: numberOfDaysToGrow *= 9; break;
+				case 6: numberOfDaysToGrow *= 8; break;
+				case 7: numberOfDaysToGrow *= 5; break;
+				case 8: numberOfDaysToGrow *= 4; break;
+				case 9: numberOfDaysToGrow *= 50; break;
+				case 10: numberOfDaysToGrow *= 5; break;
+				case 11: numberOfDaysToGrow *= 7; break;
+				case 12: numberOfDaysToGrow *= 7; break;
+				case 13: numberOfDaysToGrow *= 7; break;
+				case 14: numberOfDaysToGrow *= 10; break;
+				case 15: numberOfDaysToGrow *= 50; break;
+			}
+			
+			//TFC Original Code
+			//te.growTime = (long) ((TFC_Time.getTotalTicks() + (TFC_Time.dayLength * numberOfDaysToGrow) * growSpeed)+(world.rand.nextFloat()*TFC_Time.dayLength));
+			
+			//Aero's code (took out the growSpeed modifier)
+			te.growTime = (long)	((TFC_Time.getTotalTicks() + //Time up til now
+									(TFC_Time.dayLength * numberOfDaysToGrow)) + //Number of years
+									(world.rand.nextFloat() * TFC_Time.dayLength * TFC_Time.daysInMonth )); //Random part of a month to differentiate when the trees grow, so they dont all grow during the same update tick
 		}
-
 		if (world.getBlockLightValue(i, j + 1, k) >= 9 && te!= null && TFC_Time.getTotalTicks() > te.growTime)
 		{           
 			growTree(world, i, j, k, random);

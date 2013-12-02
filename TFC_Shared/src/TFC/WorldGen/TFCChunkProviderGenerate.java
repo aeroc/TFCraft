@@ -614,30 +614,31 @@ public class TFCChunkProviderGenerate extends ChunkProviderGenerate
 							//							}
 
 							var13 = var12;
-
-
-							if (height >= var5 - 1 && index+1 < idsTop.length && idsTop[index+1] != Block.waterStill.blockID)
-							{
+							if( height < 64 ){
+								if (height >= var5 - 1 && index+1 < idsTop.length && idsTop[index+1] != Block.waterStill.blockID){
 								idsBig[indexBig] = surfaceBlock;
 								metaBig[indexBig] = soilMeta;
+								}
+								else{
+									idsBig[indexBig] = subSurfaceBlock;
+									metaBig[indexBig] = soilMeta;
+								}
 							}
-							else
-							{
+							else{
+								idsBig[indexBig] = (short) rock1.data1;
+								metaBig[indexBig] = (byte) rock1.data2;
+							}
+						}
+						else if (var13 > 0){
+							--var13;
+							if( height < 64 ){
 								idsBig[indexBig] = subSurfaceBlock;
 								metaBig[indexBig] = soilMeta;
 							}
-						}
-						else if (var13 > 0)
-						{
-							--var13;
-							idsBig[indexBig] = subSurfaceBlock;
-							metaBig[indexBig] = soilMeta;
-
-							//							if (var13 == 0 && subSurfaceBlock == TFC_Core.getTypeForSand(soilMeta))
-							//							{
-							//								var13 = rand.nextInt(4);
-							//								subSurfaceBlock = TFC_Core.getTypeForSand(soilMeta);
-							//							}
+							else{
+								idsBig[indexBig] = (short) rock1.data1;
+								metaBig[indexBig] = (byte) rock1.data2;
+							}
 						}
 
 						if(biomegenbase.biomeID == 0)
