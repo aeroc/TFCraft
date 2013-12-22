@@ -25,9 +25,4 @@ public class SlotMoldTool extends Slot
 		}
 		return false;
 	}
-	
-	@Override
-	public int getSlotStackLimit() {
-		return 1;
-	}
 }

@@ -7,7 +7,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import TFC.Containers.Slots.SlotTuyere;
-import TFC.Items.ItemTuyere;
 import TFC.TileEntities.TEBlastFurnace;
 
 public class ContainerBlastFurnace extends ContainerTFC
@@ -55,7 +54,7 @@ public class ContainerBlastFurnace extends ContainerTFC
 		if(slot != null && slot.getHasStack())
 		{
 			ItemStack itemstack1 = slot.getStack();
-			if(i <= 0)
+			if(i == 0)
 			{
 				if(!entityplayer.inventory.addItemStackToInventory(itemstack1.copy()))
 				{
@@ -65,17 +64,14 @@ public class ContainerBlastFurnace extends ContainerTFC
 			}
 			else
 			{
-				if(itemstack1.getItem() instanceof ItemTuyere)
+				if(slot1.getHasStack())
 				{
-					if(slot1.getHasStack())
-					{
-						return null;
-					}
-					ItemStack stack = itemstack1.copy();
-					stack.stackSize = 1;                            
-					slot1.putStack(stack);                          
-					itemstack1.stackSize--;
+					return null;
 				}
+				ItemStack stack = itemstack1.copy();
+				stack.stackSize = 1;                            
+				slot1.putStack(stack);                          
+				itemstack1.stackSize--;
 			}
 			if(itemstack1.stackSize == 0)
 			{

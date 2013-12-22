@@ -23,9 +23,4 @@ public class SlotTuyere extends Slot
 		}
 		return false;
 	}
-	
-	@Override
-	public int getSlotStackLimit() {
-		return 1;
-	}
 }

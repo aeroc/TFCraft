@@ -305,18 +305,15 @@ public class TileEntitySluice extends TileEntity implements IInventory
                 for (Iterator iterator = list.iterator(); iterator.hasNext();)
                 {
                     EntityItem entity = (EntityItem)iterator.next();
-                    int itemID = entity.getEntityItem().itemID; 
-                    if(itemID == Block.gravel.blockID || itemID == TFCBlocks.Sand.blockID || itemID == TFCBlocks.Sand2.blockID)
+                    if(entity.getEntityItem().itemID == Block.gravel.blockID || entity.getEntityItem().itemID == TFCBlocks.Sand.blockID || entity.getEntityItem().itemID == TFCBlocks.Sand2.blockID)
                     {
-                        int stackSize = entity.getEntityItem().stackSize;
-                        int accept = (50 + 19 - soilAmount) / 20;
-                        if (stackSize <= accept)
+                        if(soilAmount < 50 && entity.getEntityItem().stackSize == 1)
                         {
-                            soilAmount += 20 * stackSize;
+                            soilAmount += 20;
                             entity.setDead();
                             if(soilAmount > 50)
                                 soilAmount = 50;
-                            if(itemID == Block.gravel.blockID)
+                            if(entity.getEntityItem().itemID == Block.gravel.blockID)
                             {
                                 soilType = 2;
                             }

@@ -18,17 +18,17 @@ public class SlotChest extends Slot
 {
 	EnumSize size = EnumSize.LARGE;
 	
-	List exceptions;
+	List excpetions;
 	
 	public SlotChest(IInventory iinventory, int i, int j, int k)
 	{
 		super(iinventory, i, j, k);
-		exceptions = new ArrayList<Item>();
+		excpetions = new ArrayList<Item>();
 	}
 	@Override
 	public boolean isItemValid(ItemStack itemstack)
 	{    	
-		boolean except = exceptions.contains(itemstack.getItem());
+		boolean except = excpetions.contains(itemstack.getItem());
 		
 		if((itemstack.getItem() instanceof ItemTool || itemstack.getItem() instanceof ItemTerraTool || itemstack.getItem() instanceof ItemWeapon ||
 				itemstack.getItem() instanceof ItemHoe) && itemstack.getItem() instanceof ISize && 
@@ -53,7 +53,7 @@ public class SlotChest extends Slot
 	
 	public SlotChest addItemException(ArrayList<Item> ex)
 	{
-		exceptions = ex;
+		excpetions = ex;
 		return this;
 	}
 }

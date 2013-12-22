@@ -12,6 +12,7 @@ import net.minecraft.block.Block;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
 import cpw.mods.fml.common.IWorldGenerator;
 
@@ -78,7 +79,7 @@ public class TFCOreModWorldGenOre implements IWorldGenerator {
 		//this.tryToGenerateInChunk( TFCMineral.nativeCopper, new int[]{ TFCBlocks.StoneIgEx.blockID, -1, TFCBlocks.StoneIgIn.blockID, -1, TFCBlocks.StoneMM.blockID, -1, TFCBlocks.StoneSed.blockID, -1 }, 6, world, random, coordX, coordZ );
 	}
 	private static boolean tryToGenerateInChunk( TFCMineral mineral, int[] layers, int rarity, World world, Random random, int coordX, int coordZ ){
-		if( world.getWorldChunkManager() instanceof TFCWorldChunkManager ){	//If this is the TFC overworld (not the nether)
+		if( world.getWorldChunkManager() instanceof TFCWorldChunkManager && world.getWorldChunkManager().getBiomeGenAt( coordX, coordZ ) != BiomeGenBase.hell ){	//If this is the TFC overworld (not the nether)
 			if( random.nextInt( rarity ) == 0 ){ //Might as well check to see if this chunk will even generate a vein before checking the rockLayers
 				//Create a random start position within the chunk
 				int startX = coordX + random.nextInt( 16 );
@@ -90,7 +91,11 @@ public class TFCOreModWorldGenOre implements IWorldGenerator {
 						startY = i;
 					}
 				}
+				if( startY < 11 ){
+					startY = 11;
+				}
 				if( mineral.type == TFCMineral.GenerationType.BED ){	//Randomize the height for beds
+					
 					startY = random.nextInt( startY - 10 ) + 10;	//Assign a random y-Level height to the bed (10+)
 				}
 				if( mineral.type == TFCMineral.GenerationType.PIPE ){ //Special case for kimberlite pipes

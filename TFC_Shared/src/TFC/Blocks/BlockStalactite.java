@@ -44,7 +44,6 @@ import net.minecraft.world.*;
 import net.minecraft.world.biome.*;
 import net.minecraft.world.chunk.*;
 import net.minecraft.world.gen.feature.*;
-import net.minecraftforge.common.ForgeDirection;
 
 public class BlockStalactite extends BlockSlab
 {
@@ -75,10 +74,4 @@ public class BlockStalactite extends BlockSlab
     {
     	return false;
     }
-
-	@Override
-    public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side)
-	{
-		return false;
-	}
 }

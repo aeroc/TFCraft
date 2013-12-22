@@ -18,8 +18,6 @@ import TFC.Core.TFC_ItemHeat;
 import TFC.Core.Player.PlayerInfo;
 import TFC.Core.Player.PlayerManagerTFC;
 import TFC.Items.ItemMeltedMetal;
-import TFC.Items.ItemTuyere;
-import TFC.Items.Pottery.ItemPotteryBase;
 
 public class ContainerMold extends ContainerTFC {
 	private World world;
@@ -189,13 +187,10 @@ public class ContainerMold extends ContainerTFC {
 	{
 		Slot slot = (Slot)inventorySlots.get(clickedSlot);
 		Slot slot1 = (Slot)inventorySlots.get(0);
-		Slot slot2 = (Slot)inventorySlots.get(1);
-		Slot slot3 = (Slot)inventorySlots.get(2);
-		
 		if(slot != null && slot.getHasStack())
 		{
 			ItemStack itemstack1 = slot.getStack();
-			if(clickedSlot <= 2)
+			if(clickedSlot <= 1)
 			{
 				if(!entityplayer.inventory.addItemStackToInventory(itemstack1.copy()))
 				{
@@ -205,29 +200,12 @@ public class ContainerMold extends ContainerTFC {
 			}
 			else
 			{
-				if(itemstack1.getItem() instanceof ItemMeltedMetal && TFC_ItemHeat.getIsLiquid(itemstack1))
+				if(slot1.getHasStack())
 				{
-					if(slot1.getHasStack())
-					{
-						return null;
-					}                     
-					ItemStack stack = itemstack1.copy();
-					stack.stackSize = 1;                            
-					slot1.putStack(stack);                          
-					itemstack1.stackSize--;
-				}
-				else if(itemstack1.getItem() instanceof ItemPotteryBase)
-				{
-					if(slot2.getHasStack())
-					{
-						return null;
-					}                     
-					ItemStack stack = itemstack1.copy();
-					stack.stackSize = 1;       
-					slot2.putStack(stack);                          
-					itemstack1.stackSize--;
-					
-				}
+					return null;
+				}                     
+				slot1.putStack(itemstack1.copy());                          
+				itemstack1.stackSize--;
 			}
 			if(itemstack1.stackSize == 0)
 			{
