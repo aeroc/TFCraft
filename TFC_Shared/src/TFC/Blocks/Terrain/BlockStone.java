@@ -122,7 +122,7 @@ public class BlockStone extends BlockCollapsable
 	public void harvestBlock(World world, EntityPlayer entityplayer, int i, int j, int k, int l)
 	{	
 		Random R = new Random();
-		dropBlockAsItem_do(world, i, j, k, new ItemStack(TFCItems.LooseRock, ( R.nextInt(4) + 1 ), l+looseStart));
+		dropBlockAsItem_do(world, i, j, k, new ItemStack(TFCItems.LooseRock, R.nextInt(4), l+looseStart));
 
 		super.harvestBlock(world, entityplayer, i, j, k, l);
 	}
